@@ -235,6 +235,8 @@
   .sv-delta .d{font-size:13px;font-weight:800;letter-spacing:-.02em}
   .sv-delta .r{font-size:10.5px;font-weight:700;display:block;margin-top:2px}
   .over{color:var(--pos)} .under{color:var(--warn)} .bal{color:var(--muted)}
+  .explain{font-size:13px;font-weight:500;color:var(--muted);line-height:1.65}
+  .explain b{color:var(--ink);font-weight:700}
 
   /* ---------- SKU pareto ---------- */
   .sku-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
@@ -303,6 +305,8 @@
 
   /* ---------- logo bump ---------- */
   .brand img{width:56px;height:56px}
+  .head-count{display:flex;flex-direction:column;align-items:flex-end;gap:7px}
+  .head-corte{font-size:11px;font-weight:700;color:var(--muted)} .head-corte b{color:var(--ink)}
   /* ---------- tabs ---------- */
   .tabs{display:flex;gap:7px;margin:0 0 6px;flex-wrap:wrap}
   .tab{border:1px solid var(--line);background:var(--surface);font-family:var(--sans);font-weight:800;font-size:14px;
@@ -370,6 +374,40 @@
   @media(max-width:900px){ .gal{grid-template-columns:repeat(2,1fr)} .mbar{grid-template-columns:130px 1fr auto} .fbar{grid-template-columns:130px 1fr} }
   @media(max-width:560px){ .gal{grid-template-columns:repeat(2,1fr)} }
 
+  /* ---------- botón + vista celular ---------- */
+  .viewbtn{margin-left:auto;border:1px solid var(--line);background:var(--surface);font-family:var(--sans);font-weight:800;font-size:13px;color:var(--muted);padding:10px 15px;border-radius:12px;cursor:pointer;transition:.15s;white-space:nowrap;display:inline-flex;align-items:center;gap:8px}
+  .viewbtn:hover{color:var(--plum);border-color:var(--plum-2)}
+  .viewbtn svg{width:15px;height:15px}
+  body.phonebg{background:#22202A}
+  .wrap.phone{max-width:414px;margin:22px auto;background:var(--bg);border-radius:40px;padding:34px 13px 34px;position:relative;
+    box-shadow:0 0 0 12px #14151a,0 0 0 13px #30333d,0 34px 80px rgba(0,0,0,.55)}
+  .wrap.phone::before{content:"";position:absolute;top:12px;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#14151a;border-radius:0 0 16px 16px;z-index:70}
+  .wrap.phone header{flex-direction:column;align-items:flex-start;gap:14px;padding:6px 4px 14px}
+  .wrap.phone .head-r{width:100%;justify-content:space-between;align-items:flex-start}
+  .wrap.phone .tabs{flex-wrap:wrap}
+  .wrap.phone .viewbtn{margin-left:0;width:100%;justify-content:center;margin-top:2px}
+  .wrap.phone .hero{grid-template-columns:1fr}
+  .wrap.phone .hero-l{border-right:none;border-bottom:1px solid var(--line);padding:22px 18px}
+  .wrap.phone .hero-r{padding:20px 18px}
+  .wrap.phone .hero-big{font-size:38px}
+  .wrap.phone .proj-grid,.wrap.phone .sku-grid,.wrap.phone .verdict,.wrap.phone .duo{grid-template-columns:1fr}
+  .wrap.phone .kpis,.wrap.phone .panel-grid,.wrap.phone .gal{grid-template-columns:repeat(2,1fr)}
+  .wrap.phone .sku-stats,.wrap.phone .insights{grid-template-columns:1fr}
+  .wrap.phone #dctoKpis,.wrap.phone #surtKpis{grid-template-columns:1fr!important}
+  .wrap.phone .sec-head{gap:8px}
+  .wrap.phone .sec-head h2{font-size:16px}
+  .wrap.phone .card,.wrap.phone .cat-card,.wrap.phone .sv-card,.wrap.phone .chart-card,.wrap.phone .cob-card,.wrap.phone .list-card,.wrap.phone .day-card,.wrap.phone .pareto-card{padding-left:15px;padding-right:15px}
+  .wrap.phone .bar-row{grid-template-columns:92px 1fr;gap:8px}
+  .wrap.phone .bar-val{grid-column:1/-1;text-align:left;min-width:0;margin-top:-2px}
+  .wrap.phone .sv-row{grid-template-columns:92px 1fr}
+  .wrap.phone .sv-delta{grid-column:1/-1;text-align:left;margin-top:2px}
+  .wrap.phone .sv-bar .lab{position:static;transform:none;margin-left:8px}
+  .wrap.phone .mbar{grid-template-columns:1fr auto;align-items:center}
+  .wrap.phone .mbar .ml{order:1} .wrap.phone .mbar .ms{order:2} .wrap.phone .mbar .mt{order:3;grid-column:1/-1;margin-top:3px}
+  .wrap.phone .fbar{grid-template-columns:1fr}
+  .wrap.phone .scn-toggle,.wrap.phone .cob-filters{flex-wrap:wrap}
+  .wrap.phone table{display:block;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+
 </style>
 </head>
 <body>
@@ -382,7 +420,10 @@
     </div>
     <div class="head-r">
       <div class="head-title">Centro de seguimiento<b>Feria del Hogar 2026</b></div>
-      <div class="chip-days"><span class="dot"></span><span id="daysLeft">—</span></div>
+      <div class="head-count">
+        <div class="chip-days"><span class="dot"></span><span id="daysLeft">—</span></div>
+        <div class="head-corte">Corte de venta · <b>9-sep</b></div>
+      </div>
     </div>
   </header>
   <div class="rule"></div>
@@ -390,6 +431,7 @@
     <button class="tab on" data-t="ventas"><span class="tn"></span>Ventas</button>
     <button class="tab" data-t="cobertura"><span class="tn"></span>Cobertura</button>
     <button class="tab" data-t="marcha"><span class="tn"></span>Marcha Blanca</button>
+    <button class="viewbtn" id="viewToggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="3" width="10" height="18" rx="2.5"/><line x1="11" y1="18" x2="13" y2="18"/></svg>Vista celular</button>
   </nav>
 
   <div class="tab-panel show" id="p-ventas">
@@ -403,10 +445,11 @@
     </div>
     <div class="param-strip">
       <div class="pchip"><span class="pl">Inicio</span><span class="pv">3-sep</span></div>
-      <div class="pchip"><span class="pl">Corte</span><span class="pv">9-sep</span></div>
+      <div class="pchip"><span class="pl">Corte de venta</span><span class="pv">9-sep</span></div>
       <div class="pchip"><span class="pl">Cierre</span><span class="pv">20-sep</span></div>
-      <div class="pchip"><span class="pl">Días corridos</span><span class="pv">7 de 18</span></div>
-      <div class="pchip"><span class="pl">Días restantes</span><span class="pv">11</span></div>
+      <div class="pchip"><span class="pl">Días vendidos</span><span class="pv">7 de 18</span></div>
+      <div class="pchip"><span class="pl">Faltan al cierre</span><span class="pv" id="pFaltan">—</span></div>
+      <div class="pchip"><span class="pl">Días por vender</span><span class="pv">11</span></div>
       <div class="pchip hl"><span class="pl">Meta esperada</span><span class="pv">$200 M</span></div>
       <div class="pchip hg"><span class="pl">Meta deseada</span><span class="pv">$300 M</span></div>
       <div class="pchip"><span class="pl">Descuento feria</span><span class="pv">40%</span></div>
@@ -523,19 +566,33 @@
     </div>
   </section>
 
-  <!-- ===== SURTIDO vs ROTACION ===== -->
+  <!-- ===== DESCUENTO & VALOR ===== -->
   <section>
     <div class="sec-head">
-      <span class="tick"></span><h2>Surtido ofertado vs. rotación</h2>
-      <span class="sec-sub">peso en el portafolio de feria (173 refs · 40% dcto) vs. peso en la venta</span>
+      <span class="tick"></span><h2>Descuento &amp; valor entregado</h2>
+      <span class="sec-sub">qué representa el 40% de feria sobre el precio full</span>
     </div>
-    <div class="card sv-card">
+    <div class="kpis" id="dctoKpis" style="grid-template-columns:repeat(3,1fr)"></div>
+  </section>
+
+  <!-- ===== SURTIDO & ROTACION ===== -->
+  <section>
+    <div class="sec-head">
+      <span class="tick"></span><h2>Surtido ofertado &amp; rotación</h2>
+      <span class="sec-sub">qué tanto del catálogo de feria rota y con qué peso vende cada familia</span>
+    </div>
+    <div class="card" style="padding:20px 24px 20px">
+      <p class="explain">El <b>surtido ofertado</b> son las <b>173 referencias</b> del listado de precios de la feria, repartidas en 11 familias (todas con 40% de descuento). Acá se cruzan dos cosas: cuántas de esas referencias <b>rotan</b> — la <b>activación</b> — y cómo se compara el peso de cada familia en el <b>catálogo</b> (surtido) frente a su peso en la <b>venta</b>. Donde una familia vende más de lo que pesa en surtido, hay demanda para <b>ampliar</b> la oferta; donde ocupa mucho catálogo y vende poco, toca <b>depurar o impulsar</b>.</p>
+      <div class="kpis" id="surtKpis" style="grid-template-columns:repeat(3,1fr);margin-top:16px"></div>
+    </div>
+    <div class="card sv-card" style="margin-top:16px">
       <div class="sv-legend">
         <span><i style="background:var(--faint)"></i>% del surtido ofertado</span>
         <span><i style="background:var(--plum)"></i>% de la venta ($)</span>
       </div>
       <div id="svRows"></div>
     </div>
+    <div class="card cat-card" style="margin-top:16px"><table id="surtTable"></table></div>
   </section>
 
   <!-- ===== RELACION DE SKUs ===== -->
@@ -638,6 +695,9 @@
       <div class="sec-head">
         <span class="tick"></span><h2>Percepción del consumidor</h2>
         <span class="sec-sub">Marcha Blanca · <b id="mbN">2</b> respuestas al corte · muestra inicial, escala con nuevas encuestas</span>
+      </div>
+      <div class="card" style="padding:16px 22px;margin-bottom:16px">
+        <p class="explain">La <b>marcha blanca</b> mide cómo percibe la marca el consumidor que visita la feria: calidad, variedad, precio, intención de compra y recomendación. Es una <b>muestra inicial de 2 respuestas</b>, así que los porcentajes son direccionales; el tablero se recalcula solo a medida que entran más encuestas.</p>
       </div>
       <div class="kpis" id="mbKpis"></div>
     </section>
@@ -946,27 +1006,52 @@ function renderCats(){
     `<thead><tr><th>Categoría</th><th>Valor neto</th><th>% val</th><th>Unidades</th><th>% und</th><th>SKUs</th><th>Ticket</th></tr></thead><tbody>${body}</tbody>`;
 }
 
-/* ---------- SURTIDO vs VENTAS ---------- */
+/* ---------- SURTIDO & ROTACION ---------- */
 function renderSurtido(){
   const totOf=DATA.portafolio_total;
-  const rows=DATA.match.filter(m=>m.ofertados>0||m.valor>0).map(m=>({
-    ...m, sSurt:m.ofertados/totOf*100, sVent:m.valor/DATA.prod_val*100
+  const rows=DATA.match.map(m=>({
+    cat:m.cat, ofer:m.ofertados, cv:m.con_venta, valor:m.valor,
+    activ:Math.min(100, m.ofertados>0? m.con_venta/m.ofertados*100:0),
+    sSurt:m.ofertados/totOf*100, sVent:m.valor/DATA.prod_val*100
   })).sort((a,b)=>b.sVent-a.sVent);
+  document.getElementById('surtKpis').innerHTML=[
+    {v:und(totOf),l:'Referencias ofertadas',s:'en 11 familias'},
+    {v:und(DATA.refs),l:'Referencias con venta',s:'rotando en la feria'},
+    {v:pct(DATA.refs/totOf*100,0),l:'Activación del surtido',s:DATA.refs+' de '+totOf+' refs'},
+  ].map(k=>`<div class="kpi"><div class="k-val num">${k.v}</div><div class="k-lab">${k.l}</div><div class="k-sub">${k.s}</div></div>`).join('');
   const max=Math.max(...rows.map(r=>Math.max(r.sSurt,r.sVent)));
   document.getElementById('svRows').innerHTML=rows.map(r=>{
     const delta=r.sVent-r.sSurt; let cls='bal',lab='equilibrado',sign='=';
-    if(delta>=2){cls='over';lab='sobre-indexa';sign='▲';}
-    else if(delta<=-2){cls='under';lab='sub-indexa';sign='▼';}
-    return `<div class="sv-row">
-      <div class="sv-name" title="${r.cat}">${r.cat}</div>
+    if(delta>=2){cls='over';lab='sobre-indexa';sign='▲';} else if(delta<=-2){cls='under';lab='sub-indexa';sign='▼';}
+    return `<div class="sv-row"><div class="sv-name" title="${r.cat}">${r.cat}</div>
       <div class="sv-bars">
         <div class="sv-bar sv-surt"><div class="f" data-w="${r.sSurt/max*100}"></div><span class="lab">${pct(r.sSurt,0)} surtido</span></div>
         <div class="sv-bar sv-vent"><div class="f" data-w="${r.sVent/max*100}"></div><span class="lab">${pct(r.sVent,0)} ventas</span></div>
       </div>
-      <div class="sv-delta"><span class="d ${cls}">${sign} ${pct(Math.abs(delta),1)}</span><span class="r ${cls}">${lab}</span></div>
-    </div>`;
+      <div class="sv-delta"><span class="d ${cls}">${sign} ${pct(Math.abs(delta),1)}</span><span class="r ${cls}">${lab}</span></div></div>`;
   }).join('');
   requestAnimationFrame(()=>document.querySelectorAll('#svRows .f').forEach(f=>f.style.width=f.dataset.w+'%'));
+  const ac=a=> a>=80?'over':(a>=50?'bal':'under');
+  const body=rows.map(r=>{
+    const delta=r.sVent-r.sSurt;
+    const idx= delta>=2?'<span class="over">▲ sobre-indexa</span>': delta<=-2?'<span class="under">▼ sub-indexa</span>':'<span class="bal">= equilibrado</span>';
+    return `<tr><td><span class="swatch" style="background:var(--plum)"></span>${r.cat}</td>
+      <td class="num">${r.ofer}</td><td class="num">${r.cv}</td>
+      <td class="num ${ac(r.activ)}" style="font-weight:800">${pct(r.activ,0)}</td>
+      <td class="num">${pct(r.sSurt,1)}</td><td class="num">${pct(r.sVent,1)}</td><td>${idx}</td></tr>`;
+  }).join('');
+  document.getElementById('surtTable').innerHTML='<thead><tr><th>Familia</th><th>Ofertadas</th><th>Con venta</th><th>Activación</th><th>% surtido</th><th>% venta</th><th>Rotación</th></tr></thead><tbody>'+body+'</tbody>';
+}
+
+/* ---------- DESCUENTO & VALOR ---------- */
+function renderDescuento(){
+  const dcto=DATA.descuento_pct/100, feria=DATA.total_val;
+  const full=feria/(1-dcto), ahorro=full-feria;
+  document.getElementById('dctoKpis').innerHTML=[
+    {v:millM(feria),l:'Venta a precio feria',s:'lo facturado con 40% dcto'},
+    {v:millM(full),l:'Equivalente a precio full',s:'la misma mercancía sin descuento'},
+    {v:millM(ahorro),l:'Descuento entregado',s:pct(dcto*100,0)+' trasladado al cliente'},
+  ].map(k=>`<div class="kpi"><div class="k-val num">${k.v}</div><div class="k-lab">${k.l}</div><div class="k-sub">${k.s}</div></div>`).join('');
 }
 
 /* ---------- SKU PARETO ---------- */
@@ -1050,12 +1135,13 @@ function renderInsights(M){
     `<div class="ins"><span class="tag ${k.t}">${k.t==='t-star'?'FORTALEZA':k.t==='t-ojo'?'ALERTA':'RITMO'}</span><div class="tx">${k.x}</div></div>`).join('');
 }
 
-/* ---------- countdown ---------- */
+/* ---------- countdown (días al cierre, dinámico) ---------- */
 function renderCountdown(M){
   const fin=new Date(M.fin.getTime()); fin.setHours(23,59,59,0);
   const today=new Date();
-  const left=Math.ceil((fin-today)/86400000);
+  const left=Math.max(0,Math.ceil((fin-today)/86400000));
   document.getElementById('daysLeft').textContent = left>1?`Faltan ${left} días`: left===1?'Último día':'Feria finalizada';
+  const pf=document.getElementById('pFaltan'); if(pf) pf.textContent = left>=1? (left+(left===1?' día':' días')) : 'cerrada';
   document.getElementById('corteLbl').textContent = fmtD(M.cor);
   document.getElementById('footL').innerHTML =
     `Fuente: reporte de ventas Feria del Hogar (corte ${fmtD(M.cor)}) + listado de precios de feria · <b>${DATA.descuento_pct}% de descuento</b> sobre precio full.`;
@@ -1099,7 +1185,7 @@ document.getElementById('scnToggle').addEventListener('click',e=>{
 });
 
 renderDynamic();
-renderCats(); renderSurtido(); drawPareto(); renderTop();
+renderCats(); renderDescuento(); renderSurtido(); drawPareto(); renderTop();
 
 </script>
 <script>
@@ -1186,7 +1272,7 @@ renderCats(); renderSurtido(); drawPareto(); renderTop();
   $('mbFunnel').innerHTML=MB.funnel.map(f=>`<div class="fbar"><div class="fl">${f.label}<small>${f.sub}</small></div><div class="ft"><div class="ff" style="width:${Math.max(f.pct,7)}%">${f.pct}%</div></div></div>`).join('');
   const pills=arr=>arr.map(x=>`<span class="pill">${x.label} <b>${x.count}</b></span>`).join('');
   $('mbDrivers').innerHTML=`<div class="mbsub">Razón principal para comprar</div><div style="margin-top:8px">${pills(MB.razon_compra)}</div><div class="mbsub" style="margin-top:16px">Lo que más llama la atención</div><div style="margin-top:8px">${pills(MB.llamo)}</div>`;
-  $('mbPerfil').innerHTML=`<div class="mbsub">Rango de edad</div><div style="margin-top:8px">${pills(MB.edad)}</div><div class="mbsub" style="margin-top:16px">Frecuencia de compra</div><div style="margin-top:8px">${pills(MB.frecuencia)}</div>`;
+  $('mbPerfil').innerHTML=`<div class="mbsub">Rango de edad</div><div style="margin-top:8px">${pills(MB.edad)}</div><div class="mbsub" style="margin-top:16px">Frecuencia de compra</div><div style="margin-top:8px">${pills(MB.frecuencia)}</div><div class="mbsub" style="margin-top:16px">Contexto de la visita</div><div style="margin-top:8px"><span class="pill">Buscaba producto de hogar <b>${MB.busca.pct}%</b></span><span class="pill">Info clara y suficiente <b>${MB.info_clara.pct}%</b></span></div>`;
   $('mbGusto').innerHTML=MB.gusto.length?MB.gusto.map(x=>`<div class="quote">“${x}”</div>`).join(''):'<div class="lc-sub">Sin respuestas aún.</div>';
   $('mbMejorar').innerHTML=MB.mejorar.length?MB.mejorar.map(x=>`<div class="quote">“${x}”</div>`).join(''):'<div class="lc-sub">Sin respuestas aún.</div>';
   const ins=[
@@ -1207,6 +1293,16 @@ document.getElementById('tabs').addEventListener('click',function(e){
   document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.toggle('show',p.id==='p-'+b.dataset.t);});
   window.scrollTo({top:0,behavior:'smooth'});
 });
+(function(){
+  var vt=document.getElementById('viewToggle'); if(!vt) return;
+  vt.addEventListener('click',function(){
+    var w=document.querySelector('.wrap');
+    var on=w.classList.toggle('phone');
+    document.body.classList.toggle('phonebg',on);
+    vt.lastChild.textContent = on?'Vista completa':'Vista celular';
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+})();
 
 </script>
 </body>
